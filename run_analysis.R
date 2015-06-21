@@ -20,14 +20,14 @@ library(plyr);
 ## 1. Merge the training and the test sets to create one data set
 
 # Read data from files
-activityLabels = read.table("./UCI HAR Dataset/activity_labels.txt", header=FALSE);
-features = read.table("./UCI HAR Dataset/features.txt", header=FALSE);
-subjectTest = read.table("./UCI HAR Dataset/test/subject_test.txt", header=FALSE);
-xTest = read.table("./UCI HAR Dataset/test/X_test.txt", header=FALSE);
-yTest = read.table("./UCI HAR Dataset/test/y_test.txt", header=FALSE);
-subjectTrain = read.table("./UCI HAR Dataset/train/subject_train.txt", header=FALSE);
-xTrain = read.table("./UCI HAR Dataset/train/X_train.txt", header=FALSE);
-yTrain = read.table("./UCI HAR Dataset/train/y_train.txt", header=FALSE);
+activityLabels = read.table("./activity_labels.txt", header=FALSE);
+features = read.table("./features.txt", header=FALSE);
+subjectTest = read.table("./test/subject_test.txt", header=FALSE);
+xTest = read.table("./test/X_test.txt", header=FALSE);
+yTest = read.table("./test/y_test.txt", header=FALSE);
+subjectTrain = read.table("./train/subject_train.txt", header=FALSE);
+xTrain = read.table("./train/X_train.txt", header=FALSE);
+yTrain = read.table("./train/y_train.txt", header=FALSE);
 
 # Set column names
 colnames(activityLabels) = c("activityID", "activity");
@@ -102,7 +102,7 @@ meanStdDataNoActName = meanStdData[,auxNames!="activity"]
 
 # Get only the mean of each variable for each activity and each subject
 finalData = aggregate(meanStdDataNoActName[,names(meanStdDataNoActName) != c('activityID','subjectID')],
-                     by=list(activityId=meanStdDataNoActName$activityID,subjectID = meanStdDataNoActName$subjectID),
+                     by=list(activityID=meanStdDataNoActName$activityID,subjectID = meanStdDataNoActName$subjectID),
                      mean);
 
 # Merge the finalData with activity name to include again the names
